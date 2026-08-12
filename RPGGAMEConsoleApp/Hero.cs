@@ -24,7 +24,7 @@
         public void TakeDamage(int damage)
         {
             if (damage < 0)
-                throw new ArgumentException("Урон не может быть отрицательным");
+                throw new ArgumentException("Урон не может быть отрицательным!");
 
             CurrentHp -= damage;
             if (CurrentHp < 0)
@@ -33,6 +33,9 @@
 
         public void Heal(int heal)
         {
+            if (heal < 0)
+                throw new ArgumentException("Количество очков здоровья для лечения не может быть отрицательным!");
+            
             CurrentHp += heal;
             if (CurrentHp > MaxHp)
                 CurrentHp = MaxHp;
