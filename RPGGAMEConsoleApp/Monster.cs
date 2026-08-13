@@ -2,31 +2,41 @@
 {
     public class Monster
     {
-        private int _health;
-
         public string Name { get; }
+        
+        public int Health { get; private set; }
+        public int Strength { get; private set; }
         public int Armor { get; }
+        
+        public bool IsAlive => Health > 0;
 
-        public int Health => _health;
-        public bool IsAlive => _health > 0;
-
-        public Monster(string name, int health, int armor)
+        public Monster(string name, int health, int strength, int armor)
         {
             Name = name;
-            _health = health;
+            Health = health;
+            Strength = strength;
             Armor = armor;
         }
-
-        public void TakeDamage(int amount)
+        
+        public int Attack(Hero hero)
         {
-            int real = amount - Armor;       // броня уменьшает урон
+            hero.TakeDamage(Strength);
+            return Strength;
+        }
+
+        public void TakeDamage(int amount, bool ignoreArmor = false)
+        {
+            int real = ignoreArmor 
+                ? amount 
+                : amount - Armor;
+            
             if (real < 0)
                 real = 0;
 
-            _health -= real;
+            Health -= real;
 
-            if (_health < 0)
-                _health = 0;
+            if (Health < 0)
+                Health = 0;
         }
     }
 }
